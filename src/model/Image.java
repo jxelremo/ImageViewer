@@ -1,7 +1,7 @@
 package model;
 
 public interface Image {
-    String name();
+    //String name();
     Image prev();
     Image next();
     Object bitMap();
