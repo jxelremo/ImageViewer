@@ -8,6 +8,8 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JButton;
@@ -46,6 +48,39 @@ public class Application extends JFrame{
     private JPanel elements() {
         ImagePanel panel = new ImagePanel(new FileImageReader("C:\\Users\\Public\\Pictures\\Sample Pictures").read());
         setTitle("Image Viewer"+" - "+panel.image().name());
+        panel.addMouseListener(new MouseListener() {
+            private int getXaxis;
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+                getXaxis = e.getX();
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                if (getXaxis-e.getX()<0){
+                    commands.get("Prev").execute();
+                    setTitle("Image Viewer - "+imageDisplay.image().name());
+                    repaint();
+                } else {
+                    commands.get("Next").execute();
+                    setTitle("Image Viewer - "+imageDisplay.image().name());
+                    repaint();
+                }
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+            }
+        });
         imageDisplay = panel;
         return panel;
     }
