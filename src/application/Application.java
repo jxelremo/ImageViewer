@@ -37,6 +37,7 @@ public class Application extends JFrame{
         this.setSize(new Dimension(500, 500));
         this.setLocationRelativeTo(null);
         this.getContentPane().add(elements());
+        this.setTitle("Image Viewer - "+imageDisplay.image().name());
         this.add(toolBar(),BorderLayout.SOUTH);
     }
 
@@ -47,7 +48,6 @@ public class Application extends JFrame{
 
     private JPanel elements() {
         ImagePanel panel = new ImagePanel(new FileImageReader("C:\\Users\\Public\\Pictures\\Sample Pictures").read());
-        setTitle("Image Viewer"+" - "+panel.image().name());
         panel.addMouseListener(new MouseListener() {
             private int getXaxis;
 
@@ -63,13 +63,11 @@ public class Application extends JFrame{
             @Override
             public void mouseReleased(MouseEvent e) {
                 if (getXaxis-e.getX()<0){
+                    setTitle("Image Viewer - "+imageDisplay.image().prev().name());
                     commands.get("Prev").execute();
-                    setTitle("Image Viewer - "+imageDisplay.image().name());
-                    repaint();
                 } else {
+                    setTitle("Image Viewer - "+imageDisplay.image().next().name());
                     commands.get("Next").execute();
-                    setTitle("Image Viewer - "+imageDisplay.image().name());
-                    repaint();
                 }
             }
 
@@ -99,9 +97,8 @@ public class Application extends JFrame{
 
             @Override
             public void actionPerformed(ActionEvent e) {
+                setTitle("Image Viewer - "+imageDisplay.image().prev().name());
                 commands.get("Prev").execute();
-                setTitle("Image Viewer - "+imageDisplay.image().name());
-                repaint();
             }
         });
         return prevButton;
@@ -113,9 +110,8 @@ public class Application extends JFrame{
 
             @Override
             public void actionPerformed(ActionEvent e) {
+                setTitle("Image Viewer - "+imageDisplay.image().next().name());
                 commands.get("Next").execute();
-                setTitle("Image Viewer - "+imageDisplay.image().name());
-                repaint();
             }
         });
         return nextButton;

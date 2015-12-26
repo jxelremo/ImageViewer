@@ -22,10 +22,12 @@ public class ImagePanel extends JPanel implements ImageDisplay {
     @Override
     public void show(Image image) {
         this.image = image;
+        this.repaint();
     }
 
     @Override
     protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
         g.drawImage((BufferedImage) image.bitMap(), 0, 0, this);
     }
     
