@@ -12,10 +12,13 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.HashMap;
 import java.util.Map;
+import javax.swing.AbstractAction;
+import javax.swing.InputMap;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
+import javax.swing.KeyStroke;
 import view.ImageDisplay;
 
 public class Application extends JFrame{
@@ -79,6 +82,27 @@ public class Application extends JFrame{
             public void mouseExited(MouseEvent e) {
             }
         });
+
+        InputMap inputMap = panel.getInputMap(JPanel.WHEN_IN_FOCUSED_WINDOW);
+        inputMap.put(KeyStroke.getKeyStroke("RIGHT"), "right arrow");
+        inputMap.put(KeyStroke.getKeyStroke("LEFT"), "left arrow");
+        panel.getActionMap().put("left arrow", new AbstractAction() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                setTitle("Image Viewer - "+imageDisplay.image().prev().name());
+                commands.get("Prev").execute();
+            }
+        });
+        panel.getActionMap().put("right arrow", new AbstractAction() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                setTitle("Image Viewer - "+imageDisplay.image().next().name());
+                commands.get("Next").execute();
+            }
+        });
+
         imageDisplay = panel;
         return panel;
     }
